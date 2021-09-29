@@ -1,4 +1,4 @@
-set location=C:\Users\AHP\Desktop\New folder (2)\Self Bot
+set location=put your folder directory here
 
 cd "%location%"
 start C:\Windows\py.exe "%location%"\main.py
