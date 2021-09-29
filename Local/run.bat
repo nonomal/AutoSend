@@ -1,4 +1,4 @@
-set location=C:\Users\ahpap\OneDrive\Documents\Coding\Discord Bot\Self Bot\Local
+set location=put folder directory here
 
 cd "%location%"
 start C:\Windows\py.exe "%location%"\main.py
