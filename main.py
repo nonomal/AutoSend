@@ -1,5 +1,7 @@
-import os
+import replit
+import keep_alive
 import json
+import os
 import sys
 import time
 import math
@@ -12,6 +14,12 @@ b = Fore.LIGHTBLUE_EX
 w = Fore.LIGHTWHITE_EX
 r = Fore.RED
 
+def Spinner():
+	l = ['|', '/', '-', '\\']
+	for i in l+l+l:
+		sys.stdout.write(f"""\r{Fore.LIGHTYELLOW_EX }[{Fore.LIGHTBLUE_EX }#{Fore.LIGHTYELLOW_EX }]{Fore.LIGHTWHITE_EX } Loading... {i}""")
+		sys.stdout.flush()
+		time.sleep(0.2)
 def autosend():
     print(f"\n\n                       {b}█████{y}╗ {b}██{y}╗   {b}██{y}╗{b}████████{y}╗ {b}██████{y}╗      {b}███████{y}╗{b}███████{y}╗{b}███{y}╗  {b}██{y}╗{b}████████{y}╗")
     print(f"                      {b}██{y}╔══{b}██{y}╗{b}██{y}║   {b}██{y}║╚══{b}██{y}╔══╝{b}██{y}╔═══{b}██{y}╗     {b}██{y}╔════╝{b}██{y}╔════╝{b}████{y}╗ {b}██{y}║{b}██{y}╔════{b}██{y}╗")
@@ -57,7 +65,7 @@ def Find_Working_AutoSend():
         except: pass
     return Working_AutoSend, (i-1)
 async def main():
-    os.system('cls')
+    replit.clear()
     autosend()
     print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {client.user.name}\n    ID: {client.user.id}')
     
@@ -65,20 +73,20 @@ async def main():
     print(f"\n{y}[{b}#{y}]{w} Found {AutoSends_Found} AutoSends")
     print(f"    Found {y}[{w}{len(Working_AutoSend)}{b}/{w}{AutoSends_Found}{y}]{w} operational AutoSends")
     if len(Working_AutoSend) == 0:
-        print(f"\n{y}[{b}#{y}]{w} Please ensure Setings.json is configured correctly")
-        input(f"\n{y}[{b}#{y}]{w} Press ENTER to exit")
+        print(f"\n{y}[{b}#{y}]{w} Please ensure secret Settings variable is configured correctly")
+        input(f"\n{y}[{b}#{y}]{w} Process stopped")
         client.exit = True
-        sys.exit()
+        return
     
     choice = input(f"\n{y}[{b}#{y}]{w} Commence AutoSend? {y}[{w}y/n{y}] ")
     if choice not in ("y","Y"):
-        input(f"\n{y}[{b}#{y}]{w} Press ENTER to exit")
+        input(f"\n{y}[{b}#{y}]{w} Process stopped")
         client.exit = True
-        sys.exit()
+        return
     
     tictok = 0
     while True:
-        os.system('cls')
+        replit.clear()
         autosend()
         print(f'\n{y}[{b}#{y}]{w} Running {y}{len(Working_AutoSend)}{w} AutoSends:')
         for x in Working_AutoSend:
@@ -96,67 +104,40 @@ async def main():
         time.sleep(1)
         tictok = tictok + 1
 
+replit.clear()
+keep_alive.keep_alive()
+Spinner()
+replit.clear()
 client = commands.Bot(command_prefix = "WillNotTriggerAnything", self_bot = True)
 client.remove_command('help')
 client.user_ready = False
 client.exit = False
-os.system('cls')
+replit.clear()
 
-print(f"""{y}[{b}#{y}]{w} Loading...""")
 client.Run_Main = True
 @client.event
 async def on_ready():
     #Sometimes on_ready() is triggred more than once.
     if client.Run_Main == True:
         client.Run_Main = False
-        os.system('cls')
+        replit.clear()
         try: await main()
         except:
-            if client.exit == True: sys.exit()
-            os.system('cls')
-            print(f"{y}[{b}#{y}]{r} Unknown Error Occurred")
-            input(f"\n{y}[{b}#{y}]{w} Press ENTER to exit")
-            client.exit = True
-            sys.exit()
+            if client.exit == False:
+                replit.clear()
+                print(f"{y}[{b}#{y}]{r} Unknown Error Occurred")
+                input(f"\n{y}[{b}#{y}]{w} Process stopped")
+                client.exit = True
+            return
+
 
 try:
-    if os.path.exists('Settings.json'):
-        with open("Settings.json","r") as f:
-            data = json.load(f)
-    else:
-        with open("Settings.json", "w") as f:
-            data = {}
-            data["Token"] = "Put your token here"
-            data["AutoSend_1"] = {}
-            data["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-            data["AutoSend_1"]["Send"] = "!d bump"
-            data["AutoSend_1"]["Cooldown"] = "7200"
-            data["AutoSend_2"] = {}
-            data["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-            data["AutoSend_2"]["Send"] = "pls daily"
-            data["AutoSend_2"]["Cooldown"] = "86400"
-            json.dump(data, f)
-        os.system('cls')
-        autosend()
-        print(f"{y}[{b}#{y}]{r} Setings.json was not found{w}")
-        print(f"    Created file Setings.json")
-        print(f"    Please configure Setings.json")
-        input(f"\n{y}[{b}#{y}]{w} Press ENTER to exit")
-        client.exit = True
-        sys.exit()
+    data = json.loads(os.environ.get('Settings'))
+    token = data["Token"]
+    client.run(token, bot=False)
 except:
-    if client.exit == True: sys.exit()
-    autosend()
-    print(f"{y}[{b}#{y}]{r} Error with Setings.json")
-    print(f"    {w}Please ensure Setings.json is configured correctly")
-    input(f"\n{y}[{b}#{y}]{w} Press ENTER to exit")
-    sys.exit()
-
-try:
-    client.run(data["Token"], bot=False)
-except:
-    if client.exit == True: sys.exit()
-    os.system('cls')
-    print(f"{y}[{b}#{y}]{r} Error Invalid Token")
-    input(f"\n{y}[{b}#{y}]{w} Press ENTER to exit")
-    sys.exit()
+    if client.exit == False:
+        replit.clear()
+        print(f"{y}[{b}#{y}]{r} Error Invalid Token")
+        input(f"\n{y}[{b}#{y}]{w} Process stopped")
+    
