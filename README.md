@@ -26,7 +26,9 @@
 1. Open the folder [Local](https://github.com/Zseni-Verified/AutoSend_Official/tree/main/Local) in github and download main.py
 3. Download [python](https://www.python.org/downloads/) if not already installed
 4. Install the required modules
-5. Run the file main.py
+5. Run main.py this will create a settings.json file
+6. Proceed to edit your configuration
+7. Run main.py again
 
 
 ## Credits:
