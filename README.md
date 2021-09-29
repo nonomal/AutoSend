@@ -34,6 +34,6 @@
 Using a selfbot is against discord tos
 
 ## Credits:
-* [Discord](https://discord.gg/SXng95f)
 * [Youtube](http://bit.ly/Zseni-Youtube)
+* [Discord](https://discord.gg/SXng95f)
 * [Twitter](https://twitter.com/Zseni10)
