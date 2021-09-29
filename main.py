@@ -7,7 +7,6 @@ from discord import client
 from discord.ext import commands
 from colorama import Fore
 
-#####################################################
 y = Fore.LIGHTYELLOW_EX
 b = Fore.LIGHTBLUE_EX
 w = Fore.LIGHTWHITE_EX
