@@ -5,9 +5,9 @@ Instalation:
 
 **Replit**
 * 1:
-{"Token": "Put your token here", 
+```{"Token": "Put your token here", 
   "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Cooldown": "7200"}, 
-  "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Cooldown": "86400"}}
+  "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Cooldown": "86400"}}```
 
 **Local**
 
