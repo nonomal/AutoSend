@@ -23,9 +23,12 @@
 7. Hit Run
 
 ### Local:
+1. Open the folder [Local](https://github.com/Zseni-Verified/AutoSend_Official/tree/main/Local) in github and download main.py
+3. Download [python](https://www.python.org/downloads/) if not already installed
+4. Install the required modules
+5. Run the file main.py
 
 
-
-## Links:
+## Credits:
 * [Discord](https://discord.gg/SXng95f)
 * [Youtube](http://bit.ly/Zseni-Youtube)
