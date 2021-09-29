@@ -1,4 +1,4 @@
-# AutoSend_Official
+#                                     AutoSend_Official
 ![preview](https://github.com/Zseni-Verified/AutoSend_Official/blob/main/AutoSend.png?raw=true)
 {"Token": "Put your token here", 
   "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Cooldown": "7200"}, 
