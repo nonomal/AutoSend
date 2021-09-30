@@ -26,6 +26,8 @@
 1. Open the folder [Local](https://github.com/Zseni-Verified/AutoSend_Official/tree/main/Local) in github and download main.py
 3. Download [python](https://www.python.org/downloads/) if not already installed
 4. Install the required modules
+   * ```pip install discord.py==1.7.3```
+   * ```pip install colorama```
 5. Run main.py this will create a `settings.json` file
 6. Proceed to edit your configuration
 7. Run main.py again
