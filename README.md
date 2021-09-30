@@ -33,8 +33,8 @@
 7. Run main.py again
 
 ## Caution
-* Warning using a selfbot is against discord tos and can get you banned if an another user reports you. 
-* This was made in a short ammount of time for fun and is only for educational purposes.
+* Warning using a selfbot is against discord Tos and can get you banned if another user reports you. 
+* This was made in a short amount of time for fun and is only for educational purposes.
 
 ## Credits:
 * [Youtube](http://bit.ly/Zseni-Youtube)
