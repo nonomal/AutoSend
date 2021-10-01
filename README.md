@@ -1,8 +1,8 @@
 # AutoSend_Official
 ![preview](https://github.com/Zseni-Verified/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true)
 
-## Instalation:
-#### Youtube tutorial:
+## Instalation
+### Youtube tutorial:
 * https://youtu.be/UqNXhebPqzQ
 
 ### Replit:
