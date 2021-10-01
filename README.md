@@ -1,5 +1,13 @@
-# AutoSend_Official
-![preview](https://github.com/Zseni-Verified/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true)
+<h1 align="center">AUTO SEND OFFICIAL</h1>
+<p align="center">
+  <b>🖤 Follow me here:</b><br>
+  <a href="https://discord.gg/SXng95f">Discord</a> |
+  <a href="http://bit.ly/Zseni-Youtube">YouTube</a> |
+  <a href="https://twitter.com/Zseni10">Twitter</a> |
+  <a href="https://github.com/">Github</a>
+  <br><br>
+  <img src="https://github.com/Zseni-Verified/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true">
+</p>
 
 ## Instalation
 ### Youtube tutorial:
@@ -37,8 +45,3 @@
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
 * This was made in a short amount of time for fun and is only for educational purposes.
-
-## Credits:
-* [Youtube](http://bit.ly/Zseni-Youtube)
-* [Discord](https://discord.gg/SXng95f)
-* [Twitter](https://twitter.com/Zseni10)
