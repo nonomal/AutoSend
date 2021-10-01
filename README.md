@@ -15,7 +15,7 @@
   "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Cooldown": "86400"}}
   ```
 6. Proceed to edit your configuration
-   * You can find your token using [this](https://gist.github.com/Armster15/719a4849f6c028f66f46b5550d863e81)
+   * You can find your token using [this](https://raw.githubusercontent.com/Zseni-Verified/AutoSend_Official/main/Images/GetDiscordTokenFromConsole.js)
    * To find the channel_id copy the last digits of the url to that channel.
      * For example the channel id for: `https://discord.com/channels/835679011449407882/85435265406417675`
      * Would be `85435265406417675`
