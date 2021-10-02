@@ -4,7 +4,7 @@
   <a href="https://discord.gg/SXng95f">Discord</a> |
   <a href="http://bit.ly/Zseni-Youtube">YouTube</a> |
   <a href="https://twitter.com/Zseni10">Twitter</a> |
-  <a href="https://github.com/">Github</a>
+  <a href="https://github.com/Zseni-Verified">Github</a>
   <br><br>
   <img src="https://github.com/Zseni-Verified/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true">
 </p>
