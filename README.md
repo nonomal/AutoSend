@@ -49,10 +49,3 @@
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
 * This was made in a short amount of time for fun and is only for educational purposes.
-
-
-<p align="center"> 
-  <b>Views:</b>
-  <br> <img src="https://profile-counter.glitch.me/AutoSend_Official/count.svg"> </b>
-  <br> <img src="https://github-readme-stats.vercel.app/api?username=zseni-verified&theme=dark&show_icons=true&locale=en"> </b>
-</p>
