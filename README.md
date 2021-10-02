@@ -13,9 +13,9 @@
   <img src="https://github.com/Zseni-Verified/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true">
 </p>
 
-## Instalation
-### Youtube tutorial:
-* https://youtu.be/UqNXhebPqzQ
+<h2 align="center">INSTALATION</h2>
+
+### [Youtube Tutorial](https://youtu.be/UqNXhebPqzQ)
 
 ### Replit:
 1. Create a new replit
@@ -49,6 +49,7 @@
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
 * This was made in a short amount of time for fun and is only for educational purposes.
+
 
 <p align="center"> 
   <b>Views:</b>
