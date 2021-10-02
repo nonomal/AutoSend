@@ -51,7 +51,7 @@
 * This was made in a short amount of time for fun and is only for educational purposes.
 
 <p align="center"> 
-  <b>Views:</b><br>
+  <b>Views:</b>
   </b><br> 
     <img src="https://profile-counter.glitch.me/SeizeControl_Official/count.svg">
   </b><br>
