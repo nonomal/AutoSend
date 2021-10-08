@@ -51,7 +51,7 @@
 * This was made in a short amount of time for fun and is only for educational purposes.
 
 <p align="center">
-  <img src="https://img.shields.io/npm/dt/discord.js-menu">
+  <img src="https://img.shields.io/npm/dt/AutoSend_Official">
 </p>
 
 
