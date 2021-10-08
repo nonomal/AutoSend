@@ -49,3 +49,9 @@
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
 * This was made in a short amount of time for fun and is only for educational purposes.
+
+<p align="center">
+  <img src="https://img.shields.io/npm/dt/discord.js-menu">
+</p>
+
+
