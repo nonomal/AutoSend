@@ -35,6 +35,10 @@
      * Would be `85435265406417675`
    * You can have more than two AutoSends, just make sure to name it `AutoSend_3`, `AutoSend_4` and so on...
 7. Hit Run
+#### Note:
+1. If you want it to run 24/7 on Replit use:
+   * https://uptimerobot.com/ 
+   * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
 ### Local:
 1. Open the folder [Local](https://github.com/Zseni-Verified/AutoSend_Official/tree/main/Local) in github and download main.py
@@ -45,6 +49,8 @@
 5. Run main.py this will create a `settings.json` file
 6. Proceed to edit your configuration
 7. Run main.py again
+
+
 
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
