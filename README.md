@@ -1,18 +1,17 @@
-<h1 align="center">ZSENI</h1>
+
 <a href="https://github.com/Zseni051/AutoSend_Official">
     <img align="center" src="https://github.com/Zseni051/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true"/></a>
+<div>
 <p align="center">
-  <b>🖤 Follow me here:</b><br>
-  <a href="https://twitter.com/zseni10">
-    <img align="center" src="https://raw.githubusercontent.com/Zseni051/Zseni051/main/Images/Twitter.svg" height="25" width="33"/></a> |
-  <a href="http://bit.ly/Zseni-Youtube">
-    <img align="center" src="https://raw.githubusercontent.com/Zseni051/Zseni051/main/Images/Youtube.svg" height="25" width="33"/></a> |
-  <a href="https://discord.gg/SXng95f">
-    <img align="center" src="https://raw.githubusercontent.com/Zseni051/Zseni051/main/Images/Discord.svg" height="25" width="33"/></a> |
-  <a href="https://github.com/Zseni051">
-    <img align="center" src="https://raw.githubusercontent.com/Zseni051/Zseni051/main/Images/GitHub.svg" height="25" width="33"/></a>
-  <br><br>
-</p>
+    <a href="https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA" target="_blank">
+        <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Youtube"></a>
+    <a href="https://discord.gg/SXng95f" target="_blank">
+        <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a> 
+    <a href="https://twitter.com/zseni10" target="_blank">
+        <img src="https://img.shields.io/badge/Twitter-55ADEE?style=for-the-badge&logo=Twitter&logoColor=white" alt="Twitter"></a> 
+    <a href = "mailto:orangejuice005511@gmail.com">
+        <img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" alt="Email_Contact"></a>
+</div>
 
 <h2 align="center">INSTALATION</h2>
 
