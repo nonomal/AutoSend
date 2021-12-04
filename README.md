@@ -1,7 +1,6 @@
-
-<a href="https://github.com/Zseni051/AutoSend_Official">
-    <img align="center" src="https://github.com/Zseni051/AutoSend_Official/blob/main/Images/AutoSend.png?raw=true"/></a>
 <div>
+<p align="center"><a href="https://github.com/Zseni051/AutoSend_Official">
+  <img src="https://github.com/Zseni051/AutoSend_Official/blob/main/Images/AutoSend.png" align="center" alt="SeizeControl.ico"></a></p>
 <p align="center">
     <a href="https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA" target="_blank">
         <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Youtube"></a>
