@@ -17,13 +17,13 @@
 
 ### [Youtube Tutorial](https://youtu.be/UqNXhebPqzQ)
 
-### Replit:
+## Replit:
 1. Create a new replit
 2. Select import from github
 3. paste this github url: `https://github.com/Zseni-Verified/AutoSend_Official`
 4. Go to the tab `Secrets(Environment variables)`
 5. Create a secret with the key name:`<Settings>` and for the value parse the following:
-  ```
+  ```json
   {"Token": "Put your token here", 
   "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Cooldown": "7200"}, 
   "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Cooldown": "86400"}}
@@ -35,12 +35,12 @@
      * Would be `85435265406417675`
    * You can have more than two AutoSends, just make sure to name it `AutoSend_3`, `AutoSend_4` and so on...
 7. Hit Run
-#### Note:
+### Note:
 1. If you want it to run 24/7 on Replit use:
    * https://uptimerobot.com/ 
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
-### Local:
+## Local:
 1. Open the folder [Local](https://github.com/Zseni-Verified/AutoSend_Official/tree/main/Local) in github and download main.py
 3. Download [python](https://www.python.org/downloads/) if not already installed
 4. Install the required modules
