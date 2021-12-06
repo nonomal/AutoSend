@@ -19,7 +19,7 @@
 ## Replit:
 1. Create a new replit
 2. Select import from github
-3. paste this github url: `https://github.com/Zseni051/AutoSend_Official/`
+3. paste this github url: `https://github.com/Zseni051/AutoSend-Discord-Msg`
 4. Go to the tab `Secrets(Environment variables)`
 5. Create a secret with the key name:`<Settings>` and for the value parse the following:
   ```json
