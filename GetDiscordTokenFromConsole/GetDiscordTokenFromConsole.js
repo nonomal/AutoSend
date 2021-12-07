@@ -1,6 +1,6 @@
 /*
 From: https://gist.github.com/Armster15/719a4849f6c028f66f46b5550d863e81
-I just reupload incase he makes any breaking changes.
+I just reupload incase he makes any changes.
 ------------------------------------------------------------------------
 This allows you to get your Discord token via the Discord console.
 
