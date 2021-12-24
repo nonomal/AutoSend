@@ -39,18 +39,6 @@
    * https://uptimerobot.com/ 
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
-## Local:
-1. Open the folder [Local](https://github.com/Zseni-Verified/AutoSend_Official/tree/main/Local) in github and download main.py
-3. Download [python](https://www.python.org/downloads/) if not already installed
-4. Install the required modules
-   * ```pip install discord.py==1.7.3```
-   * ```pip install colorama```
-5. Run main.py this will create a `settings.json` file
-6. Proceed to edit your configuration
-7. Run main.py again
-
-
-
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
 * This was made in a short amount of time for fun and is only for educational purposes.
