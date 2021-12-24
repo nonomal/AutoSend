@@ -1,8 +1,19 @@
+# HOW TO CHANGE SO IT WORKS ON REPLIT | DO THE OPPOSITE FOR LOCAL
+# --> change `os.system('cls')` to replit.clear()
+# --> uncomment these lines:
+#     - import replit
+#     - import keep_alive
+#     - keep_alive.keep_alive()
+#     - data["Token"] = os.environ.get('Token')
+# --> comment these lines
+#     - data["Token"] = "Put your token here"
+
+
 # <-- CODE --> #
 import replit
 import keep_alive
-import os
 import json
+import os
 import sys
 import time
 import math
@@ -142,15 +153,6 @@ if __name__ == "__main__":
             print(f"    {w}Please ensure Settings.json is configured correctly")
             input(f"\n{y}[{b}#{y}]{w} Process stopped")
     
-    #Discord Token
-    try:
-        client.run(data["Token"], bot=False)
-    except:
-        if client.exit == False:
-            replit.clear()
-            print(f"{y}[{b}#{y}]{r} Error Invalid Token")
-            input(f"\n{y}[{b}#{y}]{w} Process stopped")
-
 @client.event
 async def on_ready():
     print("test")
@@ -167,3 +169,13 @@ async def on_ready():
             input(f"\n{y}[{b}#{y}]{w} Process stopped")
             client.exit = True
             return
+
+#Discord Token
+if __name__ == "__main__":
+    try:
+        client.run(data["Token"], bot=False)
+    except:
+        if client.exit == False:
+            replit.clear()
+            print(f"{y}[{b}#{y}]{r} Error Invalid Token")
+            input(f"\n{y}[{b}#{y}]{w} Process stopped")
