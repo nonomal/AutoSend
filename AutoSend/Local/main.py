@@ -6,7 +6,7 @@
 #     - keep_alive.keep_alive()
 #     - data["Token"] = os.environ.get('Token')
 # --> comment these lines
-#     - data["Token"] = "Put your token here"
+#     -    "Token": "Put your token here",
 
 
 # <-- CODE --> #
@@ -148,21 +148,17 @@ if __name__ == "__main__":
                 int("cause error")
         else:
             with open("Settings.json", "w") as f:
-                data = {}
-                data["Token"] = "Put your token here"
-                data["AutoRoutine_1"] = {}
-                data["AutoRoutine_2"] = {}
-                for x in "12":
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"] = {}
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Send"] = "!d bump"
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Interval"] = "7200"
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["RandomOffset"] = "3"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"] = {}
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Send"] = "pls daily"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Interval"] = "86400"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
+                data = {
+    "Token": "Put your token here",
+    "AutoRoutine_1": {
+        "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Interval": "7200", "RandomOffset": "0"}, 
+        "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Interval": "86400", "RandomOffset": "0"}
+    }, 
+    "AutoRoutine_2": {
+        "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Interval": "7200", "RandomOffset": "0"}, 
+        "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Interval": "86400", "RandomOffset": "0"}
+    }
+}
                 json.dump(data, f)
             os.system('cls')
             print_autosend()
@@ -178,7 +174,7 @@ if __name__ == "__main__":
             print(f"{y}[{b}#{y}]{r} Error with Settings.json")
             print(f"    {w}Please ensure Settings.json is configured correctly")
             input(f"\n{y}[{b}#{y}]{w} Process stopped")
-    
+
 @client.event
 async def on_ready():
     #Sometimes on_ready() is triggred more than once.
