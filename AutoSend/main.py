@@ -26,7 +26,7 @@ b = Fore.LIGHTBLUE_EX
 w = Fore.LIGHTWHITE_EX
 r = Fore.RED
 
-def autosend():
+def print_autosend():
     print(f"\n\n                       {b}█████{y}╗ {b}██{y}╗   {b}██{y}╗{b}████████{y}╗ {b}██████{y}╗      {b}███████{y}╗{b}███████{y}╗{b}███{y}╗  {b}██{y}╗{b}████████{y}╗")
     print(f"                      {b}██{y}╔══{b}██{y}╗{b}██{y}║   {b}██{y}║╚══{b}██{y}╔══╝{b}██{y}╔═══{b}██{y}╗     {b}██{y}╔════╝{b}██{y}╔════╝{b}████{y}╗ {b}██{y}║{b}██{y}╔════{b}██{y}╗")
     print(f"                      {b}███████{y}║{b}██{y}║   {b}██{y}║   {b}██{y}║   {b}██{y}║   {b}██{y}║     {b}███████{y}╗{b}█████{y}╗  {b}██{y}╔{b}██{y}╗{b}██{y}║{b}██{y}║    {b}██{y}║")
@@ -36,77 +36,92 @@ def autosend():
     print(f"""{y}------------------------------------------------------------------------------------------------------------------------""")
     print(f"""{w}nel/UCsIaU94p647veKr7sy12wmA {b}|{w} https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA {b}|{w}  https://www.youtube.com/chan""")
     print(f"""{y}------------------------------------------------------------------------------------------------------------------------""")
-def Find_Working_AutoSend():
+def Load_config_data():
     i = 0
-    Working_AutoSend= []
-    while True:
-        i = i +1
-        #Check if exist
-        try: 
-            data[f"AutoSend_{i}"]
-            data[f"AutoSend_{i}"]["ChannelID"]
-            data[f"AutoSend_{i}"]["Send"]
-            data[f"AutoSend_{i}"]["Cooldown"]
-        except: 
-            break
-        #Check if have usable values
-        try: 
-            dont_append = False
-            #check if channel exist and if coolown value is an interger
-            client.get_channel(int(data[f"AutoSend_{i}"]["ChannelID"]))
-            int(data[f"AutoSend_{i}"]["Cooldown"])
-            #Check if string can be sent
-            if data[f"AutoSend_{i}"]["Send"] == "": dont_append = True
-            else:
+    data2 = {}
+    for routine in data:
+        if routine[0:12] == "AutoRoutine_":
+            i = i + 1
+            if routine == f"AutoRoutine_{i}":
                 i2 = 0
-                for x in data[f"AutoSend_{i}"]["Send"]:
-                    i2 = i2 +1
-                    if not x.isspace():
-                        dont_append = True 
-                        break
-                    if len(data[f"AutoSend_{i}"]["Send"]) == i2: dont_append = True
-            #to append or not to append that is the question
-            if dont_append == True: 
-                Working_AutoSend.append(i)
-        except: pass
-    return Working_AutoSend, (i-1)
+                for autosend in data[routine]:
+                    i2 = i2 + 1
+                    if autosend == f"AutoSend_{i2}":
+                        try:
+                            #Check if works
+                            client.get_channel(int(data[routine][f"AutoSend_{i2}"]["ChannelID"]))
+                            if data[routine][f"AutoSend_{i2}"]["Send"] == "": 
+                                int("cause error")
+                            int(data[routine][f"AutoSend_{i2}"]["Interval"])
+                            int(data[routine][f"AutoSend_{i2}"]["RandomOffset"])
+                            #Add to data2
+                            try: data2[routine]
+                            except: data2[routine] = {}
+                            try: data2[routine][f"AutoSend_{i2}"]
+                            except: data2[routine][f"AutoSend_{i2}"] = {}
+                            data2[routine][f"AutoSend_{i2}"]["ChannelID"] = data[routine][f"AutoSend_{i2}"]["ChannelID"]
+                            data2[routine][f"AutoSend_{i2}"]["Send"]      = data[routine][f"AutoSend_{i2}"]["Send"]
+                            if int(data[routine][f"AutoSend_{i2}"]["Interval"]) < 1: 
+                                data2[routine][f"AutoSend_{i2}"]["Interval"] = 1
+                            else: 
+                                data2[routine][f"AutoSend_{i2}"]["Interval"] = round(int(data[routine][f"AutoSend_{i2}"]["Interval"]))
+                            data2[routine][f"AutoSend_{i2}"]["RandomOffset"] = data[routine][f"AutoSend_{i2}"]["RandomOffset"]
+                        except:
+                            break
+    if data2 == {}:
+        return "invalid"
+    return data2
 async def main():
+    data2 = Load_config_data()
+    total_routines = len(data2)
+    total_autosends = 0
+    for routine in data2:
+        total_autosends = total_autosends + len(data2[routine])
+
     replit.clear()
-    autosend()
+    print_autosend()
     print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {client.user.name}\n    ID: {client.user.id}')
+    print(f"\n{y}[{b}#{y}]{w} {b}{total_routines}{w} AutoRoutines")
+    print(f"    Total of {b}{total_autosends}{w} AutoSends")
     
-    Working_AutoSend, AutoSends_Found = Find_Working_AutoSend()
-    print(f"\n{y}[{b}#{y}]{w} Found {AutoSends_Found} AutoSends")
-    print(f"    Found {y}[{w}{len(Working_AutoSend)}{b}/{w}{AutoSends_Found}{y}]{w} operational AutoSends")
-    if len(Working_AutoSend) == 0:
-        print(f"\n{y}[{b}#{y}]{w} Please ensure Settings.json is configured correctly")
-        input(f"\n{y}[{b}#{y}]{w} Process stopped")
-        client.exit = True
-        return
-    
-    choice = input(f"\n{y}[{b}#{y}]{w} Commence AutoSend? {y}[{w}y/n{y}] ")
+    choice = input(f"\n{y}[{b}#{y}]{w} Commence AutoSend? {y}[{w}y/n{y}]")
     if choice not in ("y","Y"):
         input(f"\n{y}[{b}#{y}]{w} Process stopped")
         client.exit = True
         return
     
+    # Start process of actually sending messages
     tictok = 0
     while True:
         replit.clear()
-        autosend()
-        print(f'\n{y}[{b}#{y}]{w} Running {y}{len(Working_AutoSend)}{w} AutoSends:')
-        for x in Working_AutoSend:
-            if int(data[f"AutoSend_{x}"]["Cooldown"]) < 1: cooldown = 1
-            else: cooldown = round(int(data[f"AutoSend_{x}"]["Cooldown"]))
-            if tictok > int(data[f"AutoSend_{x}"]["Cooldown"]):
-                cooldown = math.ceil(tictok/cooldown)*cooldown
-            send = f'{data[f"AutoSend_{x}"]["Send"]}'
-            ctx = client.get_channel(int(data[f"AutoSend_{x}"]["ChannelID"]))
-            if tictok == cooldown or tictok == 0:
-                await ctx.send(send)
-                print(f'{y}[{b}{x}{y}]{w} Sent {y}[{w}{send}{y}]{w} to {y}[{w}#{ctx}{y}]{w}')
-            else: print(f'{y}[{b}{x}{y}]{w} Sending {y}[{w}{send}{y}]{w} to {y}[{w}#{ctx}{y}]{w} in {y}[{w}{(cooldown-tictok)}{y}]{w}seconds')
+        print_autosend()
+        print(f'\n{y}[{b}#{y}]{w} Running {b}{total_routines}{w} AutoRoutines and {b}{total_autosends}{w} AutoSends:')
         
+        print_string = ""
+        for routine in data2:
+            print_string += f'\n{y}[{b}#{y}]{w} {routine}'
+            for autosend in data2[routine]:
+                ctx = client.get_channel(int(data2[routine][autosend]["ChannelID"]))
+                message = f'{data2[routine][autosend]["Send"]}'
+                if int(autosend[9::]) == 1:
+                    interval = int(data2[routine][autosend]["Interval"])
+                else:
+                    beforesend = int(autosend[9::])
+                    interval = int(data2[routine][autosend]["Interval"])
+                    while beforesend != 1:
+                        beforesend = beforesend - 1
+                        interval = interval + int(data2[routine][f"AutoSend_{beforesend}"]["Interval"])
+                offset = int(data2[routine][autosend]["RandomOffset"])
+                
+                if tictok > interval:
+                    interval = math.ceil(tictok/interval)*interval #math.ceil always roundsup 
+                if tictok == interval or tictok == 0:
+                    await ctx.send(message)
+                    print_string += f'\n    {y}[{b}{autosend[9::]}{y}]{w} Sent {y}[{w}{message}{y}]{w} to {y}[{w}#{ctx}{y}]{w}'
+                else:
+                    print_string += f'\n    {y}[{b}{autosend[9::]}{y}]{w} Sending {y}[{w}{message}{y}]{w} to {y}[{w}#{ctx}{y}]{w} in {y}[{w}{(interval-tictok)}{y}]{w}seconds with a {y}[{w}{offset}{y}]{w} random offset'
+        
+        print(print_string)
         time.sleep(1)
         tictok = tictok + 1
 
@@ -126,21 +141,28 @@ if __name__ == "__main__":
             with open("Settings.json","r") as f:
                 data = json.load(f)
             data["Token"] = os.environ.get('Token')
+            if Load_config_data() == "invalid": 
+                int("cause error")
         else:
             with open("Settings.json", "w") as f:
                 data = {}
                 #data["Token"] = "Put your token here"
-                data["AutoSend_1"] = {}
-                data["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-                data["AutoSend_1"]["Send"] = "!d bump"
-                data["AutoSend_1"]["Cooldown"] = "7200"
-                data["AutoSend_2"] = {}
-                data["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-                data["AutoSend_2"]["Send"] = "pls daily"
-                data["AutoSend_2"]["Cooldown"] = "86400"
+                data["AutoRoutine_1"] = {}
+                data["AutoRoutine_2"] = {}
+                for x in "12":
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"] = {}
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Send"] = "!d bump"
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Interval"] = "7200"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"] = {}
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Send"] = "pls daily"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Interval"] = "86400"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
                 json.dump(data, f)
             replit.clear()
-            autosend()
+            print_autosend()
             print(f"{y}[{b}#{y}]{r} Settings.json was not found{w}")
             print(f"    Created file Settings.json")
             print(f"    Please configure Settings.json")
@@ -148,19 +170,20 @@ if __name__ == "__main__":
             client.exit = True
     except:
         if client.exit == False: 
-            autosend()
+            replit.clear()
+            print_autosend()
             print(f"{y}[{b}#{y}]{r} Error with Settings.json")
             print(f"    {w}Please ensure Settings.json is configured correctly")
             input(f"\n{y}[{b}#{y}]{w} Process stopped")
     
 @client.event
 async def on_ready():
-    print("test")
     #Sometimes on_ready() is triggred more than once.
     if client.Run_Main == True:
         client.Run_Main = False
         replit.clear()
-        try: await main()
+        try: 
+            await main()
         except:
             if client.exit == True: 
                 return
