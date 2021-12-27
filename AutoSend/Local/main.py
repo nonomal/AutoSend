@@ -128,12 +128,6 @@ async def main():
         time.sleep(1)
         tictok = tictok + 1
 
-        choice = input(f"\n{y}[{b}#{y}]{w} Commence AutoSend? {y}[{w}y/n{y}]")
-        if choice not in ("y","Y"):
-            input(f"\n{y}[{b}#{y}]{w} Process stopped")
-            client.exit = True
-            return
-
 if __name__ == "__main__":
     #keep_alive.keep_alive()
 
