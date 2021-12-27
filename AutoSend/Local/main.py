@@ -17,6 +17,7 @@ import os
 import sys
 import time
 import math
+import random
 from discord import client
 from discord.ext import commands
 from colorama import Fore
@@ -66,6 +67,7 @@ def Load_config_data():
                             else: 
                                 data2[routine][f"AutoSend_{i2}"]["Interval"] = round(int(data[routine][f"AutoSend_{i2}"]["Interval"]))
                             data2[routine][f"AutoSend_{i2}"]["RandomOffset"] = data[routine][f"AutoSend_{i2}"]["RandomOffset"]
+                            data2[routine][f"AutoSend_{i2}"]["temp"] = 0
                         except:
                             break
     if data2 == {}:
@@ -104,19 +106,20 @@ async def main():
                 ctx = client.get_channel(int(data2[routine][autosend]["ChannelID"]))
                 message = f'{data2[routine][autosend]["Send"]}'
                 if int(autosend[9::]) == 1:
-                    interval = int(data2[routine][autosend]["Interval"])
+                    interval = int(data2[routine][autosend]["Interval"]) + int(data2[routine][autosend]["temp"])
                 else:
                     beforesend = int(autosend[9::])
-                    interval = int(data2[routine][autosend]["Interval"])
+                    interval = int(data2[routine][autosend]["Interval"]) + int(data2[routine][autosend]["temp"])
                     while beforesend != 1:
                         beforesend = beforesend - 1
-                        interval = interval + int(data2[routine][f"AutoSend_{beforesend}"]["Interval"])
+                        interval = interval + int(data2[routine][f"AutoSend_{beforesend}"]["Interval"]) + int(data2[routine][f"AutoSend_{beforesend}"]["temp"])
                 offset = int(data2[routine][autosend]["RandomOffset"])
                 
                 if tictok > interval:
                     interval = math.ceil(tictok/interval)*interval #math.ceil always roundsup 
-                if tictok == interval or tictok == 0:
+                if tictok == interval:
                     await ctx.send(message)
+                    data2[routine][autosend]["temp"] = random.randint(0,offset)
                     print_string += f'\n    {y}[{b}{autosend[9::]}{y}]{w} Sent {y}[{w}{message}{y}]{w} to {y}[{w}#{ctx}{y}]{w}'
                 else:
                     print_string += f'\n    {y}[{b}{autosend[9::]}{y}]{w} Sending {y}[{w}{message}{y}]{w} to {y}[{w}#{ctx}{y}]{w} in {y}[{w}{(interval-tictok)}{y}]{w}seconds with a {y}[{w}{offset}{y}]{w} random offset'
@@ -124,6 +127,12 @@ async def main():
         print(print_string)
         time.sleep(1)
         tictok = tictok + 1
+
+        choice = input(f"\n{y}[{b}#{y}]{w} Commence AutoSend? {y}[{w}y/n{y}]")
+        if choice not in ("y","Y"):
+            input(f"\n{y}[{b}#{y}]{w} Process stopped")
+            client.exit = True
+            return
 
 if __name__ == "__main__":
     #keep_alive.keep_alive()
@@ -154,7 +163,7 @@ if __name__ == "__main__":
                     data[f"AutoRoutine_{x}"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
                     data[f"AutoRoutine_{x}"]["AutoSend_1"]["Send"] = "!d bump"
                     data[f"AutoRoutine_{x}"]["AutoSend_1"]["Interval"] = "7200"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["RandomOffset"] = "3"
                     data[f"AutoRoutine_{x}"]["AutoSend_2"] = {}
                     data[f"AutoRoutine_{x}"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
                     data[f"AutoRoutine_{x}"]["AutoSend_2"]["Send"] = "pls daily"
