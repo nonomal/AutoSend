@@ -148,21 +148,16 @@ if __name__ == "__main__":
                 int("cause error")
         else:
             with open("Settings.json", "w") as f:
-                data = {}
-                #data["Token"] = "Put your token here"
-                data["AutoRoutine_1"] = {}
-                data["AutoRoutine_2"] = {}
-                for x in "12":
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"] = {}
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Send"] = "!d bump"
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Interval"] = "7200"
-                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["RandomOffset"] = "3"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"] = {}
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Send"] = "pls daily"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Interval"] = "86400"
-                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
+                data = {
+    "AutoRoutine_1": {
+        "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Interval": "7200", "RandomOffset": "0"}, 
+        "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Interval": "86400", "RandomOffset": "0"}
+    }, 
+    "AutoRoutine_2": {
+        "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Interval": "7200", "RandomOffset": "0"}, 
+        "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Interval": "86400", "RandomOffset": "0"}
+    }
+}
                 json.dump(data, f)
             replit.clear()
             print_autosend()
