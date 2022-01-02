@@ -100,7 +100,7 @@ async def main():
 
     os.system('cls')
     print_autosend()
-    print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {g}{client.user.name}\n    ID: {g}{client.user.id}')
+    print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {client.user.name}\n    ID: {client.user.id}')
     print(f"\n{y}[{b}#{y}]{w} {b}{total_routines}{w} AutoRoutines")
     print(f"    {w}Total of {b}{total_autosends}{w} AutoSends")
     
