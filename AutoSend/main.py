@@ -195,7 +195,6 @@ if __name__ == "__main__":
             print(f"{y}[{b}#{y}]{r} Error with Settings.json")
             print(f"    {y}Please ensure Settings.json is configured correctly")
             input(f"\n{y}[{b}#{y}]{r} Process stopped")
-    main()
 
 @client.event
 async def on_ready():
@@ -215,7 +214,7 @@ async def on_ready():
             return
 
 #Discord Token
-if __name__ == "__!main__":
+if __name__ == "__main__":
     try:
         client.run(data["Token"], bot=False)
     except:
