@@ -263,14 +263,13 @@ async def on_ready():
             if os.path.exists('Settings.json'):
                 with open("Settings.json","r") as f:
                     data = json.load(f)
-                #data["Token"] = os.environ.get('Token')
                 if Load_config_data(data) == "invalid": 
                     int("cause error")
             else:
                 with open("Settings.json", "w") as f:
                     # Create A Simple Template
                     data = {}
-                    data["Token"] = "Put your token here"
+                    #data["Token"] = "Put your token here"
                     data["AutoRoutine_1"] = {}
                     data["AutoRoutine_2"] = {}
                     for x in "12":
@@ -343,6 +342,7 @@ if __name__ == "__main__":
         if os.path.exists('Settings.json'):
             with open("Settings.json","r") as f:
                 data = json.load(f)
+            #data["Token"] = os.environ.get('Token')
         client.run(data["Token"], bot=False)
     except:
         if client.exit == False:
