@@ -38,7 +38,7 @@ def print_autosend():
     print(f"""{y}------------------------------------------------------------------------------------------------------------------------""")
     print(f"""{b}nel/UCsIaU94p647veKr7sy12wmA {y}|{b} https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA {y}|{b}  https://www.youtube.com/chan""")
     print(f"""{y}------------------------------------------------------------------------------------------------------------------------""")
-def Load_config_data(data):
+def Load_config_data(data, Client):
     i = 0
     data2 = {}
     for routine in data:
@@ -51,8 +51,9 @@ def Load_config_data(data):
                     if autosend == f"AutoSend_{i2}":
                         try:
                             #Check if works
-                            if client.get_channel(int(data[routine][autosend]["ChannelID"])) is None:
-                                int("cause error")
+                            if Client == True:
+                                if client.get_channel(int(data[routine][autosend]["ChannelID"])) is None:
+                                    int("cause error")
                             random_send = False
                             try:
                                 data[routine][autosend]["Send"]["Send_1"]
@@ -103,8 +104,9 @@ def Load_config_data(data):
                 if autosend == f"AutoSend_{i3}":
                     try:
                         #Check if works
-                        if client.get_channel(int(data[routine][autosend]["ChannelID"])) is None:
-                            int("cause error")
+                        if Client == True:
+                            if client.get_channel(int(data[routine][autosend]["ChannelID"])) is None:
+                                int("cause error")
                         int(data[routine][autosend]["Sleep"])
                         int(data[routine][autosend]["Interval"])
                         int(data[routine][autosend]["RandomOffset"])
@@ -150,7 +152,13 @@ def Calculate_Sleep(data2, routine, Status, autosend):
 def is_interger(x):
     return x - int(x) == 0
 async def main():
-    data2 = Load_config_data(data)
+    data2 = Load_config_data(data, True)
+    if data2 == "invalid": #Check again this time if channel id is correct
+        os.system('cls')
+        print_autosend()
+        print(f"{y}[{b}#{y}]{r} Error with Settings.json")
+        print(f"    {y}Please ensure you are using a valid channel id")
+        input(f"\n{y}[{b}#{y}]{r} Process stopped")
     try:
         data2["AutoCount"]["AutoSend_1"]
         plural = ""
@@ -251,78 +259,75 @@ if __name__ == "__main__":
     os.system('cls')
     print(f"""{y}[{b}#{y}]{y} Loading...""")
 
+    # Load config data
+    try:
+        if os.path.exists('Settings.json'):
+            with open("Settings.json","r") as f:
+                data = json.load(f)
+                #data["Token"] = os.environ.get('Token')
+            if Load_config_data(data, False) == "invalid": 
+                int("cause error")
+        else:
+            with open("Settings.json", "w") as f:
+                # Create A Simple Template
+                data = {}
+                data["Token"] = "Put your token here"
+                data["AutoRoutine_1"] = {}
+                data["AutoRoutine_2"] = {}
+                for x in "12":
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"] = {}
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Send"] = "!d bump"
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["Sleep"] = "5"
+                    data[f"AutoRoutine_{x}"]["AutoSend_1"]["RandomOffset"] = "3"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"] = {}
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Send"] = "pls daily"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["Sleep"] = "10"
+                    data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
+                    if x == 2:
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"] = {}
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"]["ChannelID"] = "Put your ChannelID here"
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"] = {}
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_1"] = "hello"
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_2"] = "how r you doing"
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_3"] = "im so sleepy"
+                        data[f"AutoRoutine_{x}"]["AutoSend_3"]["RandomOffset"] = "3"
+                data["AutoCount"] = {}
+                data[f"AutoCount"]["AutoSend_1"] = {}
+                data[f"AutoCount"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
+                data[f"AutoCount"]["AutoSend_1"]["Sleep"] = "3"
+                data[f"AutoCount"]["AutoSend_1"]["RandomOffset"] = "3"
+                data[f"AutoCount"]["AutoSend_1"]["Starting_Int"] = "0"
+                data[f"AutoCount"]["AutoSend_1"]["Interval"] = "1"
+                data[f"AutoCount"]["AutoSend_2"] = {}
+                data[f"AutoCount"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
+                data[f"AutoCount"]["AutoSend_2"]["Sleep"] = "5"
+                data[f"AutoCount"]["AutoSend_2"]["RandomOffset"] = "8"
+                data[f"AutoCount"]["AutoSend_2"]["Starting_Int"] = "51"
+                data[f"AutoCount"]["AutoSend_1"]["Interval"] = "-2"
+                json.dump(data, f, indent=4, sort_keys=True)
+            os.system('cls')
+            print_autosend()
+            print(f"{y}[{b}#{y}]{r} Settings.json was not found{w}")
+            print(f"    {g}Created file Settings.json")
+            print(f"    {y}Please configure Settings.json")
+            input(f"\n{y}[{b}#{y}]{r} Process stopped")
+            client.exit = True
+    except:
+        if client.exit == False: 
+            os.system('cls')
+            print_autosend()
+            print(f"{y}[{b}#{y}]{r} Error with Settings.json")
+            print(f"    {y}Please ensure Settings.json is configured correctly")
+            input(f"\n{y}[{b}#{y}]{r} Process stopped")
+
 @client.event
 async def on_ready():
     #Sometimes on_ready() is triggred more than once.
     if client.Run_Main == True:
         client.Run_Main = False
         os.system('cls')
-
-        # Load config data
-        try:
-            if os.path.exists('Settings.json'):
-                with open("Settings.json","r") as f:
-                    data = json.load(f)
-                if Load_config_data(data) == "invalid": 
-                    int("cause error")
-            else:
-                with open("Settings.json", "w") as f:
-                    # Create A Simple Template
-                    data = {}
-                    #data["Token"] = "Put your token here"
-                    data["AutoRoutine_1"] = {}
-                    data["AutoRoutine_2"] = {}
-                    for x in "12":
-                        data[f"AutoRoutine_{x}"]["AutoSend_1"] = {}
-                        data[f"AutoRoutine_{x}"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-                        data[f"AutoRoutine_{x}"]["AutoSend_1"]["Send"] = "!d bump"
-                        data[f"AutoRoutine_{x}"]["AutoSend_1"]["Sleep"] = "5"
-                        data[f"AutoRoutine_{x}"]["AutoSend_1"]["RandomOffset"] = "3"
-                        data[f"AutoRoutine_{x}"]["AutoSend_2"] = {}
-                        data[f"AutoRoutine_{x}"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-                        data[f"AutoRoutine_{x}"]["AutoSend_2"]["Send"] = "pls daily"
-                        data[f"AutoRoutine_{x}"]["AutoSend_2"]["Sleep"] = "10"
-                        data[f"AutoRoutine_{x}"]["AutoSend_2"]["RandomOffset"] = "3"
-                        if x == 2:
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"] = {}
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["ChannelID"] = "Put your ChannelID here"
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"] = {}
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_1"] = "hello"
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_2"] = "how r you doing"
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_3"] = "im so sleepy"
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["Sleep"] = "5"
-                            data[f"AutoRoutine_{x}"]["AutoSend_3"]["RandomOffset"] = "3"
-                    data["AutoCount"] = {}
-                    data[f"AutoCount"]["AutoSend_1"] = {}
-                    data[f"AutoCount"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-                    data[f"AutoCount"]["AutoSend_1"]["Sleep"] = "3"
-                    data[f"AutoCount"]["AutoSend_1"]["RandomOffset"] = "3"
-                    data[f"AutoCount"]["AutoSend_1"]["Starting_Int"] = "0"
-                    data[f"AutoCount"]["AutoSend_1"]["Interval"] = "1"
-                    data[f"AutoCount"]["AutoSend_2"] = {}
-                    data[f"AutoCount"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-                    data[f"AutoCount"]["AutoSend_2"]["Sleep"] = "5"
-                    data[f"AutoCount"]["AutoSend_2"]["RandomOffset"] = "8"
-                    data[f"AutoCount"]["AutoSend_2"]["Starting_Int"] = "51"
-                    data[f"AutoCount"]["AutoSend_1"]["Interval"] = "-2"
-                    json.dump(data, f, indent=4, sort_keys=True)
-                os.system('cls')
-                print_autosend()
-                print(f"{y}[{b}#{y}]{r} Settings.json was not found{w}")
-                print(f"    {g}Created file Settings.json")
-                print(f"    {y}Please configure Settings.json")
-                input(f"\n{y}[{b}#{y}]{r} Process stopped")
-                client.exit = True
-                return
-        except:
-            if client.exit == False: 
-                os.system('cls')
-                print_autosend()
-                print(f"{y}[{b}#{y}]{r} Error with Settings.json")
-                print(f"    {y}Please ensure Settings.json is configured correctly")
-                input(f"\n{y}[{b}#{y}]{r} Process stopped")
-                client.exit = True
-                return
 
         # run main()
         try: 
@@ -339,10 +344,6 @@ async def on_ready():
 #Discord Token
 if __name__ == "__main__":
     try:
-        if os.path.exists('Settings.json'):
-            with open("Settings.json","r") as f:
-                data = json.load(f)
-            #data["Token"] = os.environ.get('Token')
         client.run(data["Token"], bot=False)
     except:
         if client.exit == False:
