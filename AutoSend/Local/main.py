@@ -6,7 +6,7 @@
 #     - keep_alive.keep_alive()
 #     - data["Token"] = os.environ.get('Token')
 # --> comment these lines
-#     -    "Token": "Put your token here",
+#     -    "Token": "Put your token here"
 
 
 # <-- CODE --> #
