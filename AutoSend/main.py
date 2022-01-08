@@ -1,5 +1,5 @@
 # HOW TO CHANGE SO IT WORKS ON REPLIT | DO THE OPPOSITE FOR LOCAL
-# --> change `os.system('cls')` to replit.clear()
+# --> change `replit.clear()` to replit.clear()
 # --> uncomment these lines:
 #     - import replit
 #     - import keep_alive
