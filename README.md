@@ -47,7 +47,7 @@
 
 ## Caution
 * Warning using a selfbot is against discord TOS and can get you banned if another user reports you. 
-* This was made in a short amount of time for fun and is only for educational purposes.
+* This was made in a short amount of time for fun and is only for **EDUCATIONAL PURPOSES**.
 
 
 
