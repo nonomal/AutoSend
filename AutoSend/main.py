@@ -1,17 +1,21 @@
-# HOW TO CHANGE SO IT WORKS ON REPLIT | DO THE OPPOSITE FOR LOCAL
-# --> change `replit.clear()` to replit.clear()
-# --> uncomment these lines:
-#     - import replit
-#     - import keep_alive
-#     - keep_alive.keep_alive()
-#     - data["Token"] = os.environ.get('Token')
-# --> comment these lines
-#     -    "Token": "Put your token here"
+#!/usr/bin/env python3
 
+"""
+HOW TO CHANGE SO IT WORKS ON REPLIT | DO THE OPPOSITE FOR LOCAL
+ --> change `os.system('cls')` to replit.clear()
+ --> uncomment these lines:
+     - import replit
+     - import keep_alive
+     - keep_alive.keep_alive()
+     - data["Token"] = os.environ.get('Token')
+ --> comment these lines
+     -    "Token": "Put your token here"
+"""
 
-# <-- CODE --> #
 import replit
 import keep_alive
+from distutils.command.config import config
+from distutils.log import error
 import json
 import os
 import sys
@@ -175,13 +179,8 @@ async def main():
     print_autosend()
     print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {client.user.name}\n    ID: {client.user.id}')
     print(print_string.replace('Running ', ''))
-    
-    choice = input(f"\n{y}[{b}#{y}]{w} Commence AutoSend? {y}[{w}Y{y}/{w}N{y}]{w}")
-    if choice not in ("y","Y"):
-        input(f"\n{y}[{b}#{y}]{w} Process stopped")
-        client.exit = True
-        return
-    replit.clear()
+    print(f'\n{y}[{b}#{y}]{w} Continuing in 5 secconds...')
+    time.sleep(5)
 
     # Start process of actually sending messages
     while True:
@@ -265,7 +264,8 @@ if __name__ == "__main__":
             with open("Settings.json","r") as f:
                 data = json.load(f)
                 data["Token"] = os.environ.get('Token')
-            if Load_config_data(data, False) == "invalid": 
+            data2 = Load_config_data(data, False)
+            if data2 == "invalid": 
                 int("cause error")
         else:
             with open("Settings.json", "w") as f:
@@ -294,18 +294,18 @@ if __name__ == "__main__":
                         data[f"AutoRoutine_{x}"]["AutoSend_3"]["Send"]["Send_3"] = "im so sleepy"
                         data[f"AutoRoutine_{x}"]["AutoSend_3"]["RandomOffset"] = "3"
                 data["AutoCount"] = {}
-                data[f"AutoCount"]["AutoSend_1"] = {}
-                data[f"AutoCount"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
-                data[f"AutoCount"]["AutoSend_1"]["Sleep"] = "3"
-                data[f"AutoCount"]["AutoSend_1"]["RandomOffset"] = "3"
-                data[f"AutoCount"]["AutoSend_1"]["Starting_Int"] = "0"
-                data[f"AutoCount"]["AutoSend_1"]["Interval"] = "1"
-                data[f"AutoCount"]["AutoSend_2"] = {}
-                data[f"AutoCount"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
-                data[f"AutoCount"]["AutoSend_2"]["Sleep"] = "5"
-                data[f"AutoCount"]["AutoSend_2"]["RandomOffset"] = "8"
-                data[f"AutoCount"]["AutoSend_2"]["Starting_Int"] = "51"
-                data[f"AutoCount"]["AutoSend_1"]["Interval"] = "-2"
+                data["AutoCount"]["AutoSend_1"] = {}
+                data["AutoCount"]["AutoSend_1"]["ChannelID"] = "Put your ChannelID here"
+                data["AutoCount"]["AutoSend_1"]["Sleep"] = "3"
+                data["AutoCount"]["AutoSend_1"]["RandomOffset"] = "3"
+                data["AutoCount"]["AutoSend_1"]["Starting_Int"] = "0"
+                data["AutoCount"]["AutoSend_1"]["Interval"] = "1"
+                data["AutoCount"]["AutoSend_2"] = {}
+                data["AutoCount"]["AutoSend_2"]["ChannelID"] = "Put your ChannelID here"
+                data["AutoCount"]["AutoSend_2"]["Sleep"] = "5"
+                data["AutoCount"]["AutoSend_2"]["RandomOffset"] = "8"
+                data["AutoCount"]["AutoSend_2"]["Starting_Int"] = "51"
+                data["AutoCount"]["AutoSend_1"]["Interval"] = "-2"
                 json.dump(data, f, indent=4, sort_keys=True)
             replit.clear()
             print_autosend()
@@ -330,23 +330,22 @@ async def on_ready():
         replit.clear()
 
         # run main()
-        try: 
+        try:
             await main()
-        except:
-            if client.exit == True: 
-                return
+        except Exception as e:
             replit.clear()
-            print(f"{y}[{b}#{y}]{r} Unknown Error Occurred")
-            input(f"\n{y}[{b}#{y}]{w} Process stopped")
-            client.exit = True
-            return
+            print(f"{y}[{b}#{y}]{r} Error in main():\n    {e}")
+            print(f"\n{y}[{b}#{y}]{w} Restarting in 5 secconds...")
+            time.sleep(5)
+            #os.execv(__file__, sys.argv)
+            os.execv(sys.executable, [sys.executable, __file__] + sys.argv)
 
 #Discord Token
 if __name__ == "__main__":
     try:
         client.run(data["Token"], bot=False)
-    except:
+    except Exception as e:
         if client.exit == False:
             replit.clear()
-            print(f"{y}[{b}#{y}]{r} Error Invalid Token")
+            print(f"{y}[{b}#{y}]{r} Error when executing client.run():\n    {e}")
             input(f"\n{y}[{b}#{y}]{r} Process stopped")
