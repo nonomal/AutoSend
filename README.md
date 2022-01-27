@@ -20,28 +20,19 @@
 
 <h2 align="center">INSTALATION</h2>
 
-### [Youtube Tutorial](https://youtu.be/UqNXhebPqzQ)
+### [Youtube Tutorial](https://youtu.be/UqNXhebPqzQ) [OLD]
 
 ## Replit:
 1. Create a new replit
 2. Select import from github
 3. paste this github url: `https://github.com/Zseni051/AutoSend`
 4. Go to the tab `Secrets(Environment variables)`
-5. Create a secret with the key name:`<Settings>` and for the value parse the following:
-  ```json
-  {"Token": "Put your token here", 
-  "AutoSend_1": {"ChannelID": "Put your ChannelID here", "Send": "!d bump", "Cooldown": "7200"}, 
-  "AutoSend_2": {"ChannelID": "Put your ChannelID here", "Send": "pls daily", "Cooldown": "86400"}}
-  ```
-6. Proceed to edit your configuration
-   * You can find your token using [this](https://raw.githubusercontent.com/Zseni051/AutoSend/main/GetDiscordTokenFromConsole/GetDiscordTokenFromConsole.js)
-   * To find the channel_id copy the last digits of the url to that channel.
-     * For example the channel id for: `https://discord.com/channels/835679011449407882/85435265406417675`
-     * Would be `85435265406417675`
-   * You can have more than two AutoSends, just make sure to name it `AutoSend_3`, `AutoSend_4` and so on...
-7. Hit Run
-### Note:
-1. If you want it to run 24/7 on Replit use:
+5. Create a secret with the key name:`Token` and for the value parse your token.
+   * You can find your token by pasting [this](https://raw.githubusercontent.com/Zseni051/AutoSend/main/GetDiscordTokenFromConsole/GetDiscordTokenFromConsole.js) into the console on discord.
+7. Hit Run, and the script will make an example Settings.json
+8. Edit your configuration in Settings.json
+9. Hit Run
+10. So it runs 24/7 on Replit use:
    * https://uptimerobot.com/ 
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
