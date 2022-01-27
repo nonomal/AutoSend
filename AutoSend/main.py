@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-
-"""
-HOW TO CHANGE SO IT WORKS ON REPLIT | DO THE OPPOSITE FOR LOCAL
- --> change os.system('cls') to replit.clear()
- --> uncomment these lines:
-     - import replit
-     - import keep_alive
-     - keep_alive.keep_alive()
-     - data["Token"] = os.environ.get('Token')
- --> comment these lines
-     -    "Token": "Put your token here"
-"""
+#os.system('cls') to replit.clear()
 
 import replit
 import keep_alive
@@ -74,13 +63,6 @@ def print_autosend():
     print(f"""{y}------------------------------------------------------------------------------------------------------------------------""")
     print(f"""{b}nel/UCsIaU94p647veKr7sy12wmA {y}|{b} https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA {y}|{b}  https://www.youtube.com/chan""")
     print(f"""{y}------------------------------------------------------------------------------------------------------------------------""")
-def Spinner():
-    l = ['|', '/', '-', '\\']
-    while thread_spinner == True:
-        for i in l:
-            sys.stdout.write(f"""\r{y}[{b}#{y}]{w} Loading... {i}""")
-            sys.stdout.flush()
-            sleep(0.2)
 def verified_config_data(data, token):
     i = 0
     data2 = {}
@@ -296,11 +278,10 @@ def AutoCount(token, data2, routine):
     return print_string2
 
 def main():
+    replit_exit = False
     keep_alive.keep_alive()
     replit.clear()
-    global thread_spinner
-    thread_spinner = True
-    Thread(target=Spinner).start()
+    print(f"{y}[{b}#{y}]{w} Loading... ")
 
     # Check and load Settings
     try:
@@ -314,6 +295,7 @@ def main():
                 replit.clear()
                 print(f"{y}[{b}#{y}]{r} Invalid Token")
                 input(f"\n{y}[{b}#{y}]{r} Process stopped")
+                replit_exit = True
                 return
             data2 = verified_config_data(data, token)
             if data2 == "invalid": 
@@ -327,50 +309,51 @@ def main():
             print(f"    {g}Created file Settings.json")
             print(f"    {y}Please configure Settings.json")
             input(f"\n{y}[{b}#{y}]{r} Process stopped")
+            replit_exit = True
             return
-    except Exception as e:
+    except:
         replit.clear()
         print_autosend()
         print(f"{y}[{b}#{y}]{r} Error with Settings.json")
         print(f"    {y}Please ensure Settings.json is configured correctly")
-        input(f"\n{y}[{b}#{y}]{r} Process stopped\n{e}")
+        input(f"\n{y}[{b}#{y}]{r} Process stopped")
+        replit_exit = True
         return
     
-    # get print string of what types of messages are being sent
-    try:
-        data2["AutoCount"]["AutoSend_1"]
-        plural = ""
-        if len(data2["AutoCount"])-1 > 1:
-            plural = "s"
-        if len(data2) == 1:
-            print_string = f'\n{y}[{b}#{y}]{w} Running {b}{len(data2["AutoCount"])-1}{w} AutoCount{plural}'
-        else:
-            print_string = f'\n{y}[{b}#{y}]{w} Running {b}{len(data2)-1}{w} AutoRoutines and {b}{len(data2["AutoCount"])-1}{w} AutoCount{plural}' 
-    except:
-        print_string = f'\n{y}[{b}#{y}]{w} Running {b}{len(data2)}{w} AutoRoutines'
+    if replit_exit == False:
+        # get print string of what types of messages are being sent
+        try:
+            data2["AutoCount"]["AutoSend_1"]
+            plural = ""
+            if len(data2["AutoCount"])-1 > 1:
+                plural = "s"
+            if len(data2) == 1:
+                print_string = f'\n{y}[{b}#{y}]{w} Running {b}{len(data2["AutoCount"])-1}{w} AutoCount{plural}'
+            else:
+                print_string = f'\n{y}[{b}#{y}]{w} Running {b}{len(data2)-1}{w} AutoRoutines and {b}{len(data2["AutoCount"])-1}{w} AutoCount{plural}' 
+        except:
+            print_string = f'\n{y}[{b}#{y}]{w} Running {b}{len(data2)}{w} AutoRoutines'
 
-    thread_spinner = False
-    sleep(0.5)
-    replit.clear()
-    print_autosend()
-    print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {userdata["username"]}\n    ID: {userdata["id"]}')
-    print(print_string.replace('Running ', ''))
-    print(f'\n{y}[{b}#{y}]{w} Continuing in 5 secconds...')
-    sleep(5)
-
-    # Start process of actually sending messages
-    while True:
-        print_string2 = f"{print_string}\n"
-        for routine in data2:
-            print_string2 += f'\n{y}[{b}#{y}]{w} {routine}'
-            if routine[0:12] == "AutoRoutine_":
-                print_string2 += AutoRoutine_(token, data2, routine)
-            if routine == "AutoCount":
-                print_string2 += AutoCount(token, data2, routine)
         replit.clear()
         print_autosend()
-        print(print_string2)
-        sleep(1)
+        print(f'{y}[{b}#{y}]{w} Logged in as:\n    Name: {userdata["username"]}\n    ID: {userdata["id"]}')
+        print(print_string.replace('Running ', ''))
+        print(f'\n{y}[{b}#{y}]{w} Continuing in 5 secconds...')
+        sleep(5)
+
+        # Start process of actually sending messages
+        while True:
+            print_string2 = f"{print_string}\n"
+            for routine in data2:
+                print_string2 += f'\n{y}[{b}#{y}]{w} {routine}'
+                if routine[0:12] == "AutoRoutine_":
+                    print_string2 += AutoRoutine_(token, data2, routine)
+                if routine == "AutoCount":
+                    print_string2 += AutoCount(token, data2, routine)
+            replit.clear()
+            print_autosend()
+            print(print_string2)
+            sleep(1)
 
 if __name__ == "__main__":
     try:
