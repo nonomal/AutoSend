@@ -28,12 +28,13 @@
 3. paste this github url: `https://github.com/Zseni051/AutoSend`
 4. Go to the tab `Secrets(Environment variables)`
 5. Create a secret with the key name: `Token` and for the value parse your token.
-   * You can find your token by pasting [this](https://raw.githubusercontent.com/Zseni051/AutoSend/main/GetDiscordTokenFromConsole/GetDiscordTokenFromConsole.js) into the console on discord.
+   * Find your token by pasting [GetDiscordTokenFromConsole.js](https://raw.githubusercontent.com/Zseni051/AutoSend/main/GetDiscordTokenFromConsole/GetDiscordTokenFromConsole.js) into the console on discord.
 6. Click on the `Run` button, and now the script will make an example Settings.json
 7. Edit your configuration in Settings.json
+   * Use [zseni051.github.io/AutoSend/](https://zseni051.github.io/AutoSend/) to help with the configuration. **[Note: Still working on the site!]**
 8. **Your Done!** Click on the `Run` button for it to start
 9. For it to run 24/7 on Replit use:
-   * https://uptimerobot.com/ 
+   * [uptimerobot.com](https://uptimerobot.com/)
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
 
