@@ -1,5 +1,6 @@
-const list = document.getElementById("list");
 
+// Config
+const list = document.getElementById("list");
 document.getElementById("add").addEventListener("click", () => {
     const newItem = document.createElement("div");
     newItem.classList.add("list-item");
@@ -38,7 +39,6 @@ document.getElementById("add").addEventListener("click", () => {
         });
     };
 });
-
 list.addEventListener("click", ev => {
 	const item = ev.target.closest(".list-item");
 
@@ -87,6 +87,8 @@ list.addEventListener("click", ev => {
 	};
 });
 
+// CodeBlock
+
 Object.prototype.prettyPrint = function(){
     var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
     var replacer = function(match, pIndent, pKey, pVal, pEnd) {
@@ -95,19 +97,16 @@ Object.prototype.prettyPrint = function(){
             str = '<span class="json-string" style="color: #A5D6FF">',
             r = pIndent || '';
         if (pKey)
-            r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+            r = r + key + `"${pKey.replace(/[": ]/g, '')}"` + '</span>: ';
         if (pVal)
             r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
         return r + (pEnd || '');
     };
-
     return JSON.stringify(this, null, 3)
                .replace(/&/g, '&amp;').replace(/\\"/g, '&quot;')
                .replace(/</g, '&lt;').replace(/>/g, '&gt;')
                .replace(jsonLine, replacer);
 }
-
-
 var settings_json = {
     "AutoRoutine_1": {
         "AutoSend_1": {
@@ -176,5 +175,56 @@ var settings_json = {
         }
     }
 };
-
 document.getElementById('codeblock').innerHTML = settings_json.prettyPrint();
+
+// Copy Button
+
+function createCopyButton(codeblockDiv) {
+    const copybutton = document.createElement("copybutton"); //
+    copybutton.className = "copy-button";
+    copybutton.innerHTML = `<i class="fa-regular fa-clone"></i>`;
+    copybutton.addEventListener("click", () => copyCodeToClipboard(copybutton, codeblockDiv));
+    // addCopyButtonToDom
+    codeblockDiv.insertBefore(copybutton, codeblockDiv.firstChild);
+    const wrapper = document.createElement("div");
+    wrapper.className = "highlight-wrapper";
+    codeblockDiv.parentNode.insertBefore(wrapper, codeblockDiv);
+    wrapper.appendChild(codeblockDiv);
+}
+async function copyCodeToClipboard(copybutton, codeblockDiv) {
+    const codeToCopy = codeblockDiv.innerText;
+    try {
+      result = await navigator.permissions.query({ name: "clipboard-write" });
+      if (result.state == "granted" || result.state == "prompt") {
+        await navigator.clipboard.writeText(codeToCopy);
+      } else {
+        copyCodeBlockExecCommand(codeToCopy, codeblockDiv);
+      }
+    } catch (_) {
+      copyCodeBlockExecCommand(codeToCopy, codeblockDiv);
+    } finally {
+        copybutton.innerHTML = `<i class="fa-solid fa-check" style="color: #3BA64C;"></i>`;
+        copybutton.style.border = "1.5px solid #226337";
+        setTimeout(function () {
+            copybutton.innerHTML = `<i class="fa-regular fa-clone"></i>`;
+            copybutton.style.border = "1.5px solid #363B42";
+        }, 2000);;
+    }
+}
+function copyCodeBlockExecCommand(codeToCopy, codeblockDiv) {
+    const textArea = document.createElement("textArea");
+    textArea.contentEditable = "true";
+    textArea.readOnly = "false";
+    textArea.className = "copyable-text-area";
+    textArea.value = codeToCopy;
+    codeblockDiv.insertBefore(textArea, codeblockDiv.firstChild);
+    const range = document.createRange();
+    range.selectNodeContents(textArea);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    textArea.setSelectionRange(0, 999999);
+    document.execCommand("copy");
+    codeblockDiv.removeChild(textArea);
+}
+document.querySelectorAll("#codeblock").forEach((codeblockDiv) => createCopyButton(codeblockDiv));
