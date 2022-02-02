@@ -1,6 +1,6 @@
 <div>
   <p align="center"><a href="https://github.com/Zseni051/AutoSend">
-    <img src="https://raw.githubusercontent.com/Zseni051/AutoSend/main/Stuff/AutoSend.png" align="center" alt="AutoSend.png"></a>
+    <img src="https://raw.githubusercontent.com/Zseni051/AutoSend/main/stuff/AutoSend.png" align="center" alt="AutoSend.png"></a>
   </p>
   <p align="center">
     <a href="https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA" target="_blank">
