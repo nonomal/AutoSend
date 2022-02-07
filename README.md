@@ -37,7 +37,7 @@
    * [uptimerobot.com](https://uptimerobot.com/)
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
-## To Do
+## To Do List:
 - [ ] Send message "on message"
 - [ ] Random message doesn't send the same message twice
 - [ ] Finish the website
