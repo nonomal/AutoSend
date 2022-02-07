@@ -22,7 +22,7 @@
 
 ### [Youtube Tutorial](https://youtu.be/UqNXhebPqzQ) [OLD]
 
-## Replit:
+## Setup on Replit:
 1. Create a new replit
 2. Select import from github
 3. paste this github url: `https://github.com/Zseni051/AutoSend`
@@ -37,5 +37,9 @@
    * [uptimerobot.com](https://uptimerobot.com/)
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
+## To Do
+- [ ] Send message "on message"
+- [ ] Random message doesn't send the same message twice
+- [ ] Finish the website
 
 
