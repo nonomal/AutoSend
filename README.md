@@ -39,7 +39,8 @@
 
 ## To Do List:
 - [ ] Send message "on message"
-- [ ] Random message doesn't send the same message twice
+- [ ] Option for random message to not send the same message twice
+- [ ] Use a chat ai bot on a channel.
 - [ ] Finish the website
 
 
