@@ -1,113 +1,5 @@
-
-// Config
-const list = document.getElementById("list");
-document.getElementById("add").addEventListener("click", () => {
-    const newItem = document.createElement("div");
-    newItem.classList.add("list-item");
-
-    const newContent = document.createElement("div");
-    newContent.classList.add("content");
-    newItem.style.opacity = 0;
-    newItem.appendChild(newContent);
-
-    list.prepend(newItem);
-
-    const height = newItem.getBoundingClientRect().height;
-
-    const listanimation = list.animate(
-        [{
-                transform: `translateY(-${height}px)`
-            },
-            {
-                transform: "translateY(0px)"
-            }
-        ], {
-            duration: 200,
-        easing: "ease-in-out"
-        }
-    );
-
-    listanimation.onfinish = () => {
-        newItem.animate([{
-            opacity: 0
-        }, {
-            opacity: 1
-        }], {
-            duration: 300,
-            fill: "forwards",
-            easing: "ease-in-out"
-        });
-    };
-});
-list.addEventListener("click", ev => {
-	const item = ev.target.closest(".list-item");
-
-	const itemFadeOut = item.animate([{
-		opacity: 1
-	}, {
-		opacity: 0
-	}], {
-		duration: 300,
-		fill: "forwards",
-		easing: "ease-in-out"
-	});
-
-	itemFadeOut.onfinish = () => {
-		const siblings = [];
-		let el = item.nextElementSibling;
-
-		if (el) {
-			while (el) {
-				siblings.push(el);
-				el = el.nextElementSibling;
-			}
-
-			const height = item.getBoundingClientRect().height;
-
-			let animation;
-			siblings.forEach(sibling => {
-				animation = sibling.animate(
-					[{
-							transform: "translateY(0)"
-						},
-						{
-							transform: `translateY(${-height}px)`
-						}
-					], {
-						duration: 500,
-						easing: "ease-in-out"
-					}
-				);
-			});
-
-			animation.onfinish = () => list.removeChild(item);
-		} else {
-			list.removeChild(item);
-		}
-	};
-});
-
-// CodeBlock
-
-Object.prototype.prettyPrint = function(){
-    var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
-    var replacer = function(match, pIndent, pKey, pVal, pEnd) {
-        var key = '<span class="json-key" style="color: #7EE787">',
-            val = '<span class="json-value" style="color: #79C0FF">',
-            str = '<span class="json-string" style="color: #A5D6FF">',
-            r = pIndent || '';
-        if (pKey)
-            r = r + key + `"${pKey.replace(/[": ]/g, '')}"` + '</span>: ';
-        if (pVal)
-            r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
-        return r + (pEnd || '');
-    };
-    return JSON.stringify(this, null, 3)
-               .replace(/&/g, '&amp;').replace(/\\"/g, '&quot;')
-               .replace(/</g, '&lt;').replace(/>/g, '&gt;')
-               .replace(jsonLine, replacer);
-}
-var settings_json = {
+var preview_codeblock = document.getElementById('preview_codeblock')
+var example_json = {
     "AutoRoutine_1": {
         "AutoSend_1": {
             "ChannelID": "908973055605366784",
@@ -175,24 +67,105 @@ var settings_json = {
         }
     }
 };
-document.getElementById('codeblock').innerHTML = settings_json.prettyPrint();
 
-// Copy Button
+preview_codeblock.innerHTML = prettyPrint(example_json);
+document.querySelectorAll("pre").forEach((codeblockDiv) => createCopyButton(codeblockDiv));
+fix_dimensions()
 
+////// EventListeners //////
+var timeOutFunctionId;
+window.addEventListener("resize", function() {
+    clearTimeout(timeOutFunctionId);
+    timeOutFunctionId = setTimeout(fix_dimensions, 500);
+});
+$("#config1").on("click", ".dropdown", function(){
+    $(this).attr('tabindex', 1).focus();
+    $(this).toggleClass('active');
+    $(this).find('.dropdown-menu').slideToggle();
+});
+$("#config1").on("focusout", ".dropdown", function(){
+    $(this).removeClass('active');
+    $(this).find('.dropdown-menu').slideUp(300);
+});
+$("#config1").on("click", ".dropdown .dropdown-menu li", function(){
+    $(this).parents('.dropdown').find('span').text($(this).text());
+    $(this).parents('.dropdown').find('input').attr('value', $(this).text());
+    preview_codeblock.innerHTML = prettyPrint(get_values())
+    fix_dimensions()
+})
+
+$("#config1").on("click", "#btn_additem1", function(){
+    new_item = '<div>' + createDropdown('Select Type', 'none', ['AutoRoutine', 'AutoCount', 'AutoResponse']) + '</div>'
+    $(new_item).insertBefore('#btn_additem1');
+});
+
+////// Functions //////
+function createDropdown(name, value, items) {
+    innerhtml = '<div class="dropdown"><div class="select"><i class="fa fa-chevron-left">'
+    innerhtml += '</i><span>' + name + '</span>' 
+    innerhtml += '</div><input type="hidden" value="' + value + '">'
+    innerhtml += '<ul class="dropdown-menu">'
+    for (var i = 0; i < items.length; i++) {
+        innerhtml += '<li>' + items[i] + '</li>'
+    }
+    innerhtml += '</ul></div>'
+    return innerhtml
+}
+function get_values() {
+    output = {}
+    $(".dropdown input").each(function(i) {
+        output[$(this).val()] = $(this).val()
+    });
+    return output
+}
+function prettyPrint(code){
+    var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+    var replacer = function(match, pIndent, pKey, pVal, pEnd) {
+        var key = '<span class="json-key" style="color: #7EE787">',
+            val = '<span class="json-value" style="color: #79C0FF">',
+            str = '<span class="json-string" style="color: #A5D6FF">',
+            r = pIndent || '';
+        if (pKey)
+            r = r + key + `"${pKey.replace(/[": ]/g, '')}"` + '</span>: ';
+        if (pVal)
+            r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+        return r + (pEnd || '');
+    };
+    return JSON.stringify(code, null, 3)
+               .replace(/&/g, '&amp;').replace(/\\"/g, '&quot;')
+               .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+               .replace(jsonLine, replacer);
+}
+function fix_dimensions() {
+    $('#config').height("auto");
+    $('#preview').height("auto");
+    // if the 2 divs are sibe by side, make them the same height
+    if ($('#config').width() + 100 < window.innerWidth) {
+        if ($('#preview').height() > $('#config').height()){
+            $('#config').height($('#preview').height());
+        } else {
+            $('#preview').height($('#config').height());
+        }
+        // if the 2 divs don't reach the bottom of the window, make them do so
+        if (($('#preview').height() + $('#heading').height()) < window.innerHeight){
+            new_height = window.innerHeight - $('#heading').height() - 90
+            $('#preview').height(new_height)
+            $('#config').height(new_height)
+        }
+    }
+}
+
+// CopyButton
 function createCopyButton(codeblockDiv) {
-    const copybutton = document.createElement("copybutton"); //
+    copybutton = document.createElement("copybutton");
     copybutton.className = "copy-button";
     copybutton.innerHTML = `<i class="fa-regular fa-clone"></i>`;
     copybutton.addEventListener("click", () => copyCodeToClipboard(copybutton, codeblockDiv));
     // addCopyButtonToDom
     codeblockDiv.insertBefore(copybutton, codeblockDiv.firstChild);
-    const wrapper = document.createElement("div");
-    wrapper.className = "highlight-wrapper";
-    codeblockDiv.parentNode.insertBefore(wrapper, codeblockDiv);
-    wrapper.appendChild(codeblockDiv);
 }
 async function copyCodeToClipboard(copybutton, codeblockDiv) {
-    const codeToCopy = codeblockDiv.innerText;
+    codeToCopy = codeblockDiv.innerText;
     try {
       result = await navigator.permissions.query({ name: "clipboard-write" });
       if (result.state == "granted" || result.state == "prompt") {
@@ -212,7 +185,7 @@ async function copyCodeToClipboard(copybutton, codeblockDiv) {
     }
 }
 function copyCodeBlockExecCommand(codeToCopy, codeblockDiv) {
-    const textArea = document.createElement("textArea");
+    textArea = document.createElement("textArea");
     textArea.contentEditable = "true";
     textArea.readOnly = "false";
     textArea.className = "copyable-text-area";
@@ -227,4 +200,3 @@ function copyCodeBlockExecCommand(codeToCopy, codeblockDiv) {
     document.execCommand("copy");
     codeblockDiv.removeChild(textArea);
 }
-document.querySelectorAll("#codeblock").forEach((codeblockDiv) => createCopyButton(codeblockDiv));
