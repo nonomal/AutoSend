@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<browserconfig>
-    <msapplication>
-        <tile>
-            <square150x150logo src="/images/favicons/mstile-150x150.png"/>
-            <TileColor>#0e1219</TileColor>
-        </tile>
-    </msapplication>
-</browserconfig>
+{
+    "name": "",
+    "short_name": "",
+    "icons": [
+        {
+            "src": "/images/favicons/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#0e1219",
+    "background_color": "#0e1219",
+    "display": "standalone"
+}
