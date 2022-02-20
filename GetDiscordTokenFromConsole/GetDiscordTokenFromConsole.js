@@ -1,17 +1,5 @@
 /*
 From: https://gist.github.com/Armster15/719a4849f6c028f66f46b5550d863e81
-I just reupload incase he makes any breaking changes.
-------------------------------------------------------------------------
-This allows you to get your Discord token via the Discord console.
-
-Why this method?
-- Simpler, just copy paste the function and call it, no need to monitor and manually look for headers
-- More accurate
-- More visually appealing
-
-This code is licensed under The Unlicense. For more information please visit https://unlicense.org/
-
-To use, just copy paste everything in this into the Discord JavaScript Console
 */
 
 
