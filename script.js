@@ -1,75 +1,74 @@
-var preview_codeblock = document.getElementById('preview_codeblock')
 var example_json = {
+    "AutoCount": {
+       "AutoSend_1": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "5",
+          "Starting_Int": "0",
+          "Interval": "1"
+       },
+       "AutoSend_2": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "5",
+          "Starting_Int": "5",
+          "Interval": "-2"
+       }
+    },
     "AutoRoutine_1": {
-        "AutoSend_1": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": {
-                "Send_1": "hello",
-                "Send_2": "how r you doing",
-                "Send_3": "dayum chat is dead"
-            }
-        },
-        "AutoSend_2": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": "seccond"
-        },
-        "AutoSend_3": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": "third"
-        }
+       "AutoSend_1": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": {
+             "Send_1": "hello",
+             "Send_2": "how r you doing",
+             "Send_3": "dayum chat is dead"
+          }
+       },
+       "AutoSend_2": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": "seccond"
+       },
+       "AutoSend_3": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": "third"
+       }
     },
     "AutoRoutine_2": {
-        "AutoSend_1": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": "first2"
-        },
-        "AutoSend_2": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": "seccond2"
-        },
-        "AutoSend_3": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": "third2"
-        },
-        "AutoSend_4": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "0",
-            "Send": "four2"
-        }
-    },
-    "AutoCount": {
-        "AutoSend_1": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "5",
-            "Starting_Int": "0",
-            "Interval": "1"
-        },
-        "AutoSend_2": {
-            "ChannelID": "908973055605366784",
-            "Sleep": "5",
-            "RandomOffset": "5",
-            "Starting_Int": "5",
-            "Interval": "-2"
-        }
+       "AutoSend_1": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": "first2"
+       },
+       "AutoSend_2": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": "seccond2"
+       },
+       "AutoSend_3": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": "third2"
+       },
+       "AutoSend_4": {
+          "ChannelID": "908973055605366784",
+          "Sleep": "5",
+          "RandomOffset": "0",
+          "Send": "four2"
+       }
     }
 };
 
-preview_codeblock.innerHTML = prettyPrint(example_json);
-document.querySelectorAll("pre").forEach((codeblockDiv) => createCopyButton(codeblockDiv));
+$("#preview_codeblock").html(prettyPrint(example_json));
+build_ConfigButtons(get_previewCode());
 fix_dimensions()
 
 ////// EventListeners //////
@@ -88,9 +87,28 @@ $("#config1").on("focusout", ".dropdown", function(){
     $(this).find('.dropdown-menu').slideUp(300);
 });
 $("#config1").on("click", ".dropdown .dropdown-menu li", function(){
-    $(this).parents('.dropdown').find('span').text($(this).text());
-    $(this).parents('.dropdown').find('input').attr('value', $(this).text());
-    preview_codeblock.innerHTML = prettyPrint(get_values())
+    previewCode = get_previewCode()
+    // get value of selected item
+    value = $(this).parents('.dropdown').find('input').val();
+    if ($(this).text() != 'AutoCount' && $(this).text() != 'AutoResponse') {
+        if (value.split('_')[0] == $(this).text()) {
+            return;
+        }
+        value = IncrementKeyName(previewCode, $(this).text() + '_')
+    } else {
+        if (value == $(this).text()) {
+            return
+        }
+        value = $(this).text()
+    }
+    // update value of the dropdown
+    if (previewCode[value] != undefined) {
+        return
+    }
+    $(this).parents('.dropdown').find('span').text(value);
+    $(this).parents('.dropdown').find('input').attr('value', value);
+    $("#preview_codeblock").html(prettyPrint(get_ConfigButtonsValues()));
+    build_ConfigButtons(get_previewCode()); // So there in the right order
     fix_dimensions()
 })
 
@@ -100,6 +118,13 @@ $("#config1").on("click", "#btn_additem1", function(){
 });
 
 ////// Functions //////
+function IncrementKeyName(data, key) {
+    i = 1;
+    while (data[key + i]) {
+        i++;
+    }
+    return key + i;
+}
 function createDropdown(name, value, items) {
     innerhtml = '<div class="dropdown"><div class="select"><i class="fa fa-chevron-left">'
     innerhtml += '</i><span>' + name + '</span>' 
@@ -111,12 +136,27 @@ function createDropdown(name, value, items) {
     innerhtml += '</ul></div>'
     return innerhtml
 }
-function get_values() {
-    output = {}
-    $(".dropdown input").each(function(i) {
-        output[$(this).val()] = $(this).val()
+function get_ConfigButtonsValues() {
+    // get all the config values
+    data = {}
+    $(".dropdown input").each(function() {
+        if ($(this).val() == 'none') {
+            return
+        }
+        data[$(this).val()] = $(this).val()
     });
-    return output
+    // return config values with keys sorted alphabetically
+    return Object.keys(data).sort().reduce((a, c) => (a[c] = data[c], a), {})
+}
+function get_previewCode() {
+    return JSON.parse($("#preview_codeblock").text())
+}
+function build_ConfigButtons(previewCode) {
+    $("#config1").find("#btn_additem1").prevAll().remove();
+    for (var key in previewCode) {
+        new_dropdown = '<div>' + createDropdown(key, key, ['AutoRoutine', 'AutoCount', 'AutoResponse']) + '</div>'
+        $(new_dropdown).insertBefore('#btn_additem1');
+    }
 }
 function prettyPrint(code){
     var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
@@ -156,6 +196,7 @@ function fix_dimensions() {
 }
 
 // CopyButton
+document.querySelectorAll("pre").forEach((codeblockDiv) => createCopyButton(codeblockDiv));
 function createCopyButton(codeblockDiv) {
     copybutton = document.createElement("copybutton");
     copybutton.className = "copy-button";
