@@ -113,7 +113,8 @@ $("#config1").on("click", ".dropdown .dropdown-menu li", function(){
 })
 
 $("#config1").on("click", "#btn_additem1", function(){
-    new_item = '<div>' + createDropdown('Select Type', 'none', ['AutoRoutine', 'AutoCount', 'AutoResponse']) + '</div>'
+    options = get_dropdownOptions(get_ConfigButtonsValues())
+    new_item = '<div>' + createDropdown('Select Type', 'none', options) + '</div>'
     $(new_item).insertBefore('#btn_additem1');
 });
 
@@ -151,10 +152,26 @@ function get_ConfigButtonsValues() {
 function get_previewCode() {
     return JSON.parse($("#preview_codeblock").text())
 }
-function build_ConfigButtons(previewCode) {
+function get_dropdownOptions(data){
+    options = ['AutoCount', 'AutoResponse', 'AutoRoutine']
+    if (data['AutoCount'] != undefined && data['AutoResponse'] != undefined) {
+        options = ['AutoRoutine', 'Remove']
+    } else {
+        if (data['AutoCount'] != undefined) {
+            options = ['AutoRoutine', 'AutoResponse', 'Remove']
+        }
+        if (data['AutoResponse'] != undefined) {
+            options = ['AutoRoutine', 'AutoCount', 'Remove']
+        }
+    }
+    return options
+}
+function build_ConfigButtons(data) {
     $("#config1").find("#btn_additem1").prevAll().remove();
-    for (var key in previewCode) {
-        new_dropdown = '<div>' + createDropdown(key, key, ['AutoRoutine', 'AutoCount', 'AutoResponse']) + '</div>'
+
+    options = get_dropdownOptions(data)
+    for (var key in data) {
+        new_dropdown = '<div>' + createDropdown(key, key, options) + '</div>'
         $(new_dropdown).insertBefore('#btn_additem1');
     }
 }
