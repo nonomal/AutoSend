@@ -98,11 +98,12 @@ pre {
     border-radius:1rem;
     color:#F0F6FC;
     margin:1.5em auto;
+    margin-bottom: 1.5em;
     padding:2em;
     position:relative;
     text-align:left;
     width:95%;
-    height: 100%;
+    height: fit-content;
 }
 
 .copy-button {
