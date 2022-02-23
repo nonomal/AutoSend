@@ -69,7 +69,7 @@ var example_json = {
 
 $("#preview_codeblock").html(prettyPrint(example_json));
 build_ConfigButtons(get_previewCode());
-fix_dimensions()
+fix_dimensions();
 
 ////// EventListeners //////
 var timeOutFunctionId;
@@ -87,91 +87,92 @@ $("#config1").on("focusout", ".dropdown", function(){
     $(this).find('.dropdown-menu').slideUp(300);
 });
 $("#config1").on("click", ".dropdown .dropdown-menu li", function(){
-    previewCode = get_previewCode()
     // get value of selected item
-    value = $(this).parents('.dropdown').find('input').val();
-    if ($(this).text() != 'AutoCount' && $(this).text() != 'AutoResponse') {
+    var previewCode = get_previewCode();
+    var value = $(this).parents('.dropdown').find('input').val();
+    if ($(this).text() == 'AutoRoutine') {
         if (value.split('_')[0] == $(this).text()) {
             return;
         }
-        value = IncrementKeyName(previewCode, $(this).text() + '_')
+        value = IncrementKeyName(previewCode, $(this).text() + '_');
     } else {
         if (value == $(this).text()) {
-            return
+            return;
         }
-        value = $(this).text()
+        value = $(this).text();
+    }
+    // Just in case
+    if (previewCode[value] != undefined) {
+        return;
     }
     // update value of the dropdown
-    if (previewCode[value] != undefined) {
-        return
-    }
     $(this).parents('.dropdown').find('span').text(value);
     $(this).parents('.dropdown').find('input').attr('value', value);
     $("#preview_codeblock").html(prettyPrint(get_ConfigButtonsValues()));
     build_ConfigButtons(get_previewCode()); // So there in the right order
-    fix_dimensions()
-})
+    fix_dimensions();
+});
 
 $("#config1").on("click", "#btn_additem1", function(){
-    options = get_dropdownOptions(get_ConfigButtonsValues())
-    new_item = '<div>' + createDropdown('Select Type', 'none', options) + '</div>'
+    var options = get_dropdownOptions(get_ConfigButtonsValues());
+    var new_item = '<div>' + createDropdown('Select Type', 'none', options) + '</div>';
     $(new_item).insertBefore('#btn_additem1');
 });
 
 ////// Functions //////
 function IncrementKeyName(data, key) {
-    i = 1;
+    var i = 1;
     while (data[key + i]) {
         i++;
     }
     return key + i;
 }
-function createDropdown(name, value, items) {
-    innerhtml = '<div class="dropdown"><div class="select"><i class="fa fa-chevron-left">'
-    innerhtml += '</i><span>' + name + '</span>' 
-    innerhtml += '</div><input type="hidden" value="' + value + '">'
-    innerhtml += '<ul class="dropdown-menu">'
-    for (var i = 0; i < items.length; i++) {
-        innerhtml += '<li>' + items[i] + '</li>'
-    }
-    innerhtml += '</ul></div>'
-    return innerhtml
+function get_previewCode() {
+    return JSON.parse($("#preview_codeblock").text());
 }
 function get_ConfigButtonsValues() {
     // get all the config values
-    data = {}
+    var data = {};
     $(".dropdown input").each(function() {
         if ($(this).val() == 'none') {
-            return
+            return;
         }
-        data[$(this).val()] = $(this).val()
+        data[$(this).val()] = $(this).val();
     });
     // return config values with keys sorted alphabetically
-    return Object.keys(data).sort().reduce((a, c) => (a[c] = data[c], a), {})
-}
-function get_previewCode() {
-    return JSON.parse($("#preview_codeblock").text())
+    return Object.keys(data).sort().reduce((a, c) => (a[c] = data[c], a), {});
 }
 function get_dropdownOptions(data){
-    options = ['AutoCount', 'AutoResponse', 'AutoRoutine']
+    var options = ['AutoCount', 'AutoResponse', 'AutoRoutine'];
     if (data['AutoCount'] != undefined && data['AutoResponse'] != undefined) {
-        options = ['AutoRoutine', 'Remove']
+        options = ['AutoRoutine', 'Remove'];
     } else {
         if (data['AutoCount'] != undefined) {
-            options = ['AutoRoutine', 'AutoResponse', 'Remove']
+            options = ['AutoRoutine', 'AutoResponse', 'Remove'];
         }
         if (data['AutoResponse'] != undefined) {
-            options = ['AutoRoutine', 'AutoCount', 'Remove']
+            options = ['AutoRoutine', 'AutoCount', 'Remove'];
         }
     }
-    return options
+    return options;
+}
+function createDropdown(name, value, items) {
+    var innerhtml = '<div class="dropdown"><div class="select"><i class="fa fa-chevron-left">';
+    innerhtml += '</i><span>' + name + '</span>';
+    innerhtml += '</div><input type="hidden" value="' + value + '">';
+    innerhtml += '<ul class="dropdown-menu">';
+    for (var i = 0; i < items.length; i++) {
+        innerhtml += '<li>' + items[i] + '</li>';
+    }
+    innerhtml += '</ul></div>';
+    return innerhtml;
 }
 function build_ConfigButtons(data) {
     $("#config1").find("#btn_additem1").prevAll().remove();
-
-    options = get_dropdownOptions(data)
+    var new_dropdown;
+    var options = get_dropdownOptions(data);
     for (var key in data) {
-        new_dropdown = '<div>' + createDropdown(key, key, options) + '</div>'
+        new_dropdown = '<div>' + createDropdown(key, key, options) + '</div>';
         $(new_dropdown).insertBefore('#btn_additem1');
     }
 }
@@ -182,10 +183,12 @@ function prettyPrint(code){
             val = '<span class="json-value" style="color: #79C0FF">',
             str = '<span class="json-string" style="color: #A5D6FF">',
             r = pIndent || '';
-        if (pKey)
+        if (pKey) {
             r = r + key + `"${pKey.replace(/[": ]/g, '')}"` + '</span>: ';
-        if (pVal)
+        }
+        if (pVal) {
             r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+        }
         return r + (pEnd || '');
     };
     return JSON.stringify(code, null, 3)
@@ -205,9 +208,9 @@ function fix_dimensions() {
         }
         // if the 2 divs don't reach the bottom of the window, make them do so
         if (($('#preview').height() + $('#heading').height()) < window.innerHeight){
-            new_height = window.innerHeight - $('#heading').height() - 90
-            $('#preview').height(new_height)
-            $('#config').height(new_height)
+            var new_height = window.innerHeight - $('#heading').height() - 90;
+            $('#preview').height(new_height);
+            $('#config').height(new_height);
         }
     }
 }
@@ -215,7 +218,7 @@ function fix_dimensions() {
 // CopyButton
 document.querySelectorAll("pre").forEach((codeblockDiv) => createCopyButton(codeblockDiv));
 function createCopyButton(codeblockDiv) {
-    copybutton = document.createElement("copybutton");
+    var copybutton = document.createElement("copybutton");
     copybutton.className = "copy-button";
     copybutton.innerHTML = `<i class="fa-regular fa-clone"></i>`;
     copybutton.addEventListener("click", () => copyCodeToClipboard(copybutton, codeblockDiv));
@@ -223,9 +226,9 @@ function createCopyButton(codeblockDiv) {
     codeblockDiv.insertBefore(copybutton, codeblockDiv.firstChild);
 }
 async function copyCodeToClipboard(copybutton, codeblockDiv) {
-    codeToCopy = codeblockDiv.innerText;
+    var codeToCopy = codeblockDiv.innerText;
     try {
-      result = await navigator.permissions.query({ name: "clipboard-write" });
+      var result = await navigator.permissions.query({ name: "clipboard-write" });
       if (result.state == "granted" || result.state == "prompt") {
         await navigator.clipboard.writeText(codeToCopy);
       } else {
@@ -239,11 +242,11 @@ async function copyCodeToClipboard(copybutton, codeblockDiv) {
         setTimeout(function () {
             copybutton.innerHTML = `<i class="fa-regular fa-clone"></i>`;
             copybutton.style.border = "1.5px solid #363B42";
-        }, 2000);;
+        }, 2000);
     }
 }
 function copyCodeBlockExecCommand(codeToCopy, codeblockDiv) {
-    textArea = document.createElement("textArea");
+    var textArea = document.createElement("textArea");
     textArea.contentEditable = "true";
     textArea.readOnly = "false";
     textArea.className = "copyable-text-area";
