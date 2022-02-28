@@ -90,16 +90,17 @@ $("#config1").on("click", ".dropdown .dropdown-menu li", function(){
     // get value of selected item
     var previewCode = get_previewCode();
     var value = $(this).parents('.dropdown').find('input').val();
-    if ($(this).text() == 'AutoRoutine') {
-        if (value.split('_')[0] == $(this).text()) {
+    var text = $(this).text().replace(/\s/g, "") // remove whitespaces
+    if (text == 'AutoRoutine') {
+        if (value.split('_')[0] == text) {
             return;
         }
-        value = IncrementKeyName(previewCode, $(this).text() + '_');
+        value = IncrementKeyName(previewCode, text + '_');
     } else {
-        if (value == $(this).text()) {
+        if (value == text) {
             return;
         }
-        value = $(this).text();
+        value = text;
     }
     if (value == 'Remove') {
         value = 'none';
@@ -157,6 +158,10 @@ function createDropdown(name, value, items) {
     return innerhtml;
 }
 function get_dropdownOptions(data){
+    // icons
+    var add_icon = '<i class="fa-solid fa-folder-plus"></i>' + ' ';
+    var remove_icon = '<i class="fa-solid fa-trash"></i>' + ' ';
+    // options
     var options = ['AutoCount', 'AutoResponse', 'AutoRoutine', 'Remove'];
     if (data['AutoCount'] != undefined && data['AutoResponse'] != undefined) {
         options = ['AutoRoutine', 'Remove'];
@@ -166,6 +171,15 @@ function get_dropdownOptions(data){
         }
         if (data['AutoResponse'] != undefined) {
             options = ['AutoRoutine', 'AutoCount', 'Remove'];
+        }
+    }
+    // add icons to options
+    for (var i = 0; i < options.length; i++) {
+        // if option is AutoRoutine or AutoCount
+        if (options[i] == 'AutoCount' || options[i] == 'AutoResponse' || options[i] == 'AutoRoutine') {
+            options[i] = add_icon + 'AutoRoutine';
+        } else if (options[i] == 'Remove') {
+            options[i] = remove_icon + 'Remove';
         }
     }
     return options;
