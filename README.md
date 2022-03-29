@@ -35,9 +35,10 @@
    * The URL is in the window that says "Your bot is alive!" copy the repl.co link
 
 ## To Do List:
-- [ ] Send message "on message"
-- [ ] Option for random message to not send the same message twice
-- [ ] Use a chat ai bot on a channel.
-- [ ] Finish the website
+- [ ] Send a certain message "on a certain message"
+- [ ] Option for random message to not send the same message twice.
+- [ ] Delete message after a certain duration.
+- [ ] Use an ai chat bot on a channel.
+- [ ] Finish the website.
 
 
