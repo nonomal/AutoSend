@@ -1,5 +1,6 @@
 <div>
-  <p align="center"><a href="https://github.com/Zseni051/AutoSend">
+  <p align="center">
+    <a href="https://zseni051.github.io/AutoSend/">
     <img src="https://raw.githubusercontent.com/Zseni051/AutoSend/gh-pages/images/AutoSend.png" align="center" alt="AutoSend.png"></a>
   </p>
   <p align="center">
